@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from .models import Book, Author, BookInstance, Genre
-
+from django.views import generic
 def index(request):
     """
         Функция отображения для домашней страницы сайта.
@@ -9,18 +9,23 @@ def index(request):
     num_books = Book.objects.all().count()
     num_instances = BookInstance.objects.all().count()
     # Доступные книги (статус = 'a')
-    num_instances_available = (
-BookInstance.objects.filter(status='a').count())
-
+    num_instances_available = (BookInstance.objects.filter(status='a').count())
+    #mama_books = Book.objects.filter(title__contains='mama').count()
+   # genre_books = Book.objects.filter(genre__iexact="mama").count()
 
     num_authors=Author.objects.count()
-    # переменной контекста context
+    # переменной context
     context = {
         'num_books': num_books,
         'num_instances': num_instances,
         'num_instances_available': num_instances_available,
         'num_authors': num_authors,
+        #'mama_books': mama_books,
+       # 'book_genres': genre_books,
     }
-
-    # Render the HTML template index.html with the data in the context variable
     return render(request, 'index.html', context=context)
+
+class BookListView(generic.ListView):
+        model = Book
+class BookDetailView(generic.DetailView):
+    model = Book
