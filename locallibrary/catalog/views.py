@@ -10,8 +10,8 @@ def index(request):
     num_instances = BookInstance.objects.all().count()
     # Доступные книги (статус = 'a')
     num_instances_available = (BookInstance.objects.filter(status='a').count())
-    #mama_books = Book.objects.filter(title__contains='mama').count()
-   # genre_books = Book.objects.filter(genre__iexact="mama").count()
+    crime_books = Book.objects.filter(title__icontains='crime').count()
+    genre_books = Book.objects.filter(genre__name__iexact="novel").count()
 
     num_authors=Author.objects.count()
     # переменной context
@@ -20,12 +20,21 @@ def index(request):
         'num_instances': num_instances,
         'num_instances_available': num_instances_available,
         'num_authors': num_authors,
-        #'mama_books': mama_books,
-       # 'book_genres': genre_books,
+        'crime_books': crime_books,
+        'genre_books': genre_books,
     }
     return render(request, 'index.html', context=context)
 
 class BookListView(generic.ListView):
         model = Book
+        paginate_by = 4
+
 class BookDetailView(generic.DetailView):
     model = Book
+
+class AuthorListView(generic.ListView):
+        model = Author
+        paginate_by = 5
+
+class AuthorDetailView(generic.DetailView):
+        model = Author
