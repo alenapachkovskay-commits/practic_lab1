@@ -8,7 +8,7 @@ import datetime
 from django.contrib.auth.decorators import login_required, permission_required
 from django.shortcuts import get_object_or_404
 from django.urls import reverse
-from catalog.forms import RenewBookModelForm
+from .forms import RenewBookModelForm
 
 def index(request):
     """

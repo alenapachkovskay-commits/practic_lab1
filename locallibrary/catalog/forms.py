@@ -1,7 +1,11 @@
 import datetime
 
 from django import forms
-from catalog.models import BookInstance #почему красное
+from .models import BookInstance  #почему красное
+# Invalidate Caches пофиксить код норм вроде
+# не работает
+# убрала catalog. вроде норм.о был абсолютный импорт стал
+# относительный из текущей директории оккк
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 from django.forms import ModelForm
