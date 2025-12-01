@@ -13,7 +13,7 @@
         {% if perms.catalog.can_mark_returned %}
 
             (<a href="">Mark as returned</a>)
-
+{% if perms.catalog.can_mark_returned %}- <a href="{% url 'renew-book-librarian' bookinst.id %}">Renew</a>{% endif %}
         {% endif %}
       </li>
       {% endfor %}
