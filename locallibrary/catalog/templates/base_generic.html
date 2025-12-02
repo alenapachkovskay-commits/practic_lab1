@@ -48,6 +48,7 @@
    <li><a href="{% url 'all-borrowed' %}">All borrowed</a></li>
 {% if perms.catalog.add_author %}
    <li><a href="{% url 'author-create' %}">Create author</a></li>
+    <li><a href="{% url 'book-create' %}">Create book</a></li>
 {% endif %}
 </ul>
 {% endif %}

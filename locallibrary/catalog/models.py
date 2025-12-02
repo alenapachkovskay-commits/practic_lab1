@@ -14,6 +14,16 @@ class Genre(models.Model):
         """
         return self.name
 
+
+class Language(models.Model):
+    name = models.CharField(max_length=200, unique=True, help_text="Enter language for book")
+
+    def __str__(self):
+        return self.name
+    def get_absolute_url(self):
+        return reverse('language-list', args=[str(self.id)])
+
+
  #Used to generate URLs by reversing the URL patterns
 class Book(models.Model):
     """
@@ -28,6 +38,7 @@ class Book(models.Model):
     genre = models.ManyToManyField(Genre, help_text="Select best genre for this book")
     # ManyToManyField used because genre can contain many books. Books can cover many genres.
     # Genre class has already been defined so we can specify the object above.
+    language = models.ForeignKey(Language, on_delete=models.SET_NULL, null=True)
     def display_genre(self):
         """
         Creates a string for the Genre. This is required to display genre in Admin.
@@ -36,7 +47,14 @@ class Book(models.Model):
 
     display_genre.short_description = 'Genre'
 
-    #Word = models.ForeignKey('Word', on_delete=models.SET_NULL, null=True)
+    def display_language(self):
+        """
+        Creates a string for the Language. This is required to display language in Admin.
+        """
+        if self.language:
+            return self.language.name
+        return ''
+    display_language.short_description = 'Language'
 
     def __str__(self):
         """
@@ -110,3 +128,7 @@ class Author(models.Model):
     def __str__(self):
         """String for representing the Model object."""
         return f'{self.last_name}, {self.first_name}'
+
+
+
+
